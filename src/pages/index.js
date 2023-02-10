@@ -62,8 +62,13 @@ export default function Home({ home, products }) {
                   </a>
                 </Link>
                 <p>
-                  <Button>
-                    Add to Cart
+                  <Button className="snipcart-add-item"
+                    data-item-id={product.id}
+                    data-item-price={product.price}
+                    data-item-url={`/products/${product.slug}`}
+                    data-item-image={product.image.url}
+                    data-item-name={product.name}>
+                      Add to cart
                   </Button>
                 </p>
               </li>
@@ -94,6 +99,7 @@ export async function getStaticProps() {
           heroBackground
         }
         products(first: 4) {
+          id
           name
           price
           slug

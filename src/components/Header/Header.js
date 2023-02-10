@@ -22,18 +22,18 @@ const Header = () => {
         </p>
         <ul className={styles.headerLinks}>
           <li>
-            <Link href="#">
-              <a>Link</a>
+            <Link href="/categories/apparel">
+              <a>Apparel</a>
             </Link>
           </li>
           <li>
-            <Link href="#">
-              <a>Link</a>
+            <Link href="/categories/acessories">
+              <a>Acessories</a>
             </Link>
           </li>
           <li>
-            <Link href="#">
-              <a>Link</a>
+            <Link href="/categories/featured">
+              <a>Featured</a>
             </Link>
           </li>
         </ul>

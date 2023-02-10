@@ -32,7 +32,7 @@ export default function Product({ product }) {
               __html: product.description?.html
             }}/>
             <p className={styles.productPrice}>
-              ${product.price}
+              ${product.price.toFixed(2)}
             </p>
             <p className={styles.productBuy}>
               <Button className="snipcart-add-item"

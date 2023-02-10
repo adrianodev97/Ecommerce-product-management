@@ -48,7 +48,7 @@ export default function Home({ home, products }) {
           {products.map(product => {
             return (
               <li key={product.slug}>
-                <Link href="#">
+                <Link href={`products/${product.slug}`}>
                   <a>
                     <div className={styles.productImage}>
                       <img width={product.image.width} height={product.image.height} src={product.image.url} alt="" />
@@ -104,7 +104,6 @@ export async function getStaticProps() {
     `
   })
 
-  console.log('data', data)
   const home = data.data.page;
   const products = data.data.products;
 

@@ -10,6 +10,7 @@ import {
 import Layout from '@components/Layout';
 import Container from '@components/Container';
 import Button from '@components/Button';
+import Map from '@components/Map';
 
 import styles from '@styles/Page.module.scss'
 
@@ -56,9 +57,7 @@ export default function Stores({ storeLocations }) {
           </div>
           <div className={styles.storesMap}>
             <div className={styles.storesMapContainer}>
-              <div className={styles.map}>
-                Map
-              </div>
+              <Map className={styles.map} />
             </div>
           </div>
         </div>

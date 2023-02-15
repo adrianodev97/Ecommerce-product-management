@@ -8,7 +8,6 @@ import {
 } from "@apollo/client";
 
 import Layout from '@components/Layout';
-import Header from '@components/Header';
 import Container from '@components/Container';
 import Button from '@components/Button';
 

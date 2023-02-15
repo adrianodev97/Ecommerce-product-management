@@ -47,7 +47,7 @@ const Header = () => {
         </p>
         <ul className={styles.headerLocales}>
           <li>
-            <Link href="#">
+            <Link href="/">
               <a>
                 ES
               </a>

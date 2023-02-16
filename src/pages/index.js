@@ -16,8 +16,6 @@ import Button from '@components/Button';
 import styles from '@styles/Page.module.scss'
 
 export default function Home({ home, products }) {
-  console.log('home', home)
-  console.log('products', products)
   const { heroTitle, heroText, heroLink, heroBackground } = home;
   
   return (
@@ -80,7 +78,10 @@ export default function Home({ home, products }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
+
+  console.log('locale', locale)
+
   const client  = new ApolloClient({
     uri: 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/cldw1isol1vlm01ulh98o2d1l/master',
     cache: new InMemoryCache()
@@ -88,7 +89,7 @@ export async function getStaticProps() {
 
   const data = await client.query({
     query: gql`
-      query PageHome {
+      query PageHome($locale: Locale!) {
         page(where: {slug: "home"}) {
           id
           heroLink
@@ -97,6 +98,11 @@ export async function getStaticProps() {
           name
           slug
           heroBackground
+          localizations(locales: [$locale]) {
+            heroText
+            heroTitle
+            locale
+          }
         }
         products(where: {categories_some: {slug: "featured"}}) {
           id
@@ -106,11 +112,21 @@ export async function getStaticProps() {
           image 
         }
       }
-      
-    `
+    `,
+    variables: {
+      locale
+    }
   })
 
-  const home = data.data.page;
+  let home = data.data.page;
+
+  if(home.localizations.length > 0) {
+    home = {
+      ...home,
+      ...home.localizations[0]
+    }
+  }
+
   const products = data.data.products;
 
   return {

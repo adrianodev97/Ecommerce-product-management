@@ -51,7 +51,7 @@ export default function Product({ product }) {
   )
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
   const client  = new ApolloClient({
     uri: 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/cldw1isol1vlm01ulh98o2d1l/master',
     cache: new InMemoryCache()
@@ -59,25 +59,39 @@ export async function getStaticProps({ params }) {
   
   const data = await client.query({
     query: gql`
-      query Myquery($slug: String = "cosmo-mug") {
-        product(where: {slug: $slug}) {
-          id
-          image
-          name
-          price
+    query PageProduct($slug: String, $locale: Locale!) {
+      product(where: {slug: $slug}) {
+        id
+        image
+        name
+        price
+        description {
+          html
+        }
+        slug
+        localizations(locales: [$locale]) {
           description {
             html
           }
-          slug
+          locale
         }
-      }    
+      }
+    }
     `,
     variables: {
-      slug: params.productSlug
+      slug: params.productSlug,
+      locale
     }
   })
 
-  const product = data.data.product;
+  let product = data.data.product;
+
+  if(product.localizations.length > 0) {
+    product = {
+      ...product,
+      ...product.localizations[0]
+    }
+  } 
 
   return {
     props: {
@@ -86,7 +100,7 @@ export async function getStaticProps({ params }) {
   }
 }
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
   const client  = new ApolloClient({
     uri: 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/cldw1isol1vlm01ulh98o2d1l/master',
     cache: new InMemoryCache()
@@ -115,7 +129,17 @@ export async function getStaticPaths() {
   })
 
   return {
-    paths,
+    paths: [
+      ...paths,
+      ...paths.flatMap(path => {
+        return locales.map(locale => {
+          return {
+            ...path,
+            locale
+          }
+        })
+      })
+    ],
     fallback: false
   }
 }

@@ -81,8 +81,6 @@ export default function Home({ home, products }) {
 
 export async function getStaticProps({ locale }) {
 
-  console.log('locale', locale)
-
   const client  = new ApolloClient({
     uri: 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/cldw1isol1vlm01ulh98o2d1l/master',
     cache: new InMemoryCache()

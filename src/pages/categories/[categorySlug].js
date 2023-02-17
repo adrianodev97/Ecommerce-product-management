@@ -7,6 +7,8 @@ import {
   gql
 } from "@apollo/client";
 
+import { buildImage } from '@lib/cloudinary';
+
 import Layout from '@components/Layout';
 import Container from '@components/Container';
 import Button from '@components/Button';
@@ -14,7 +16,7 @@ import Button from '@components/Button';
 import styles from '@styles/Page.module.scss'
 
 export default function Category({ category, products }) {
-
+ 
   return (
     <Layout>
       <Head>
@@ -29,12 +31,13 @@ export default function Category({ category, products }) {
 
         <ul className={styles.products}>
           {products.map((product) => {
+             const ImageUrl = buildImage(product.image.public_id).resize('w_900,h_900').toURL()
             return(
               <li key={product.id}>
                 <Link href={`/products/${product.slug}`}>
                   <a>
                     <div className={styles.productImage}>
-                      <img src={product.image.url} width={product.image.width} height={product.image.height} alt="Product Image" />
+                      <img src={ImageUrl} width={'900'} height={'900'} alt="Product Image" />
                     </div>
                     <h3 className={styles.productTitle}>
                       {product.name}

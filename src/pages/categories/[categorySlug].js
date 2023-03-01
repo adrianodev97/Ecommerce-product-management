@@ -49,9 +49,9 @@ export default function Category({ category, products }) {
                 </Link>
                 <p>
                 <Button className="snipcart-add-item"
-                    data-item-id={product.id}
+                    data-item-id={product.slug}
                     data-item-price={product.price}
-                    data-item-url={`/products/${product.id}`}
+                    data-item-url={`/products/${product.slug}`}
                     data-item-image={product.image.url}
                     data-item-name={product.name}>
                       Add to cart

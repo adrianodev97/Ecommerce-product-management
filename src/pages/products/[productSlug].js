@@ -38,9 +38,9 @@ export default function Product({ product }) {
             </p>
             <p className={styles.productBuy}>
               <Button className="snipcart-add-item"
-                data-item-id={'cosmo-trucker-hat'}
+                data-item-id={product.slug}
                 data-item-price={product.price}
-                data-item-url={`/products/${'cosmo-trucker-hat'}`}
+                data-item-url={`/products/${product.slug}`}
                 data-item-image={product.image.url}
                 data-item-name={product.name}>
                   Add to cart
